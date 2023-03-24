@@ -3,14 +3,32 @@ import { useRouter } from 'next/router';
 
 const NotePage = ({ note }) => {
   const router = useRouter();
+
+  const deleteNoteHandler = async () => {
+    const data = await fetch('/api/deleteNote', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: note.id,
+      }),
+    });
+
+    if (data.status === 200) {
+      router.push('/');
+    }
+  };
+
   if (!note) return <div>Not found</div>;
+
   return (
     <div className="flex flex-col gap-y-4">
       <div className="flex gap-x-4 self-end">
         <Button onClick={() => router.push(`/notes/${note.id}/edit`)}>
           Edit
         </Button>
-        <Button>Delete</Button>
+        <Button onClick={deleteNoteHandler}>Delete</Button>
       </div>
       <div className="bg-lemon/75 px-12 py-4">
         <h2 className="mb-2 text-xl font-bold text-black">{note.title}</h2>
