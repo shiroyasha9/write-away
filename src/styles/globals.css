@@ -14,10 +14,10 @@
   }
 
   .editor-container {
-    @apply h-[65vh] md:h-[400px] flex flex-1 flex-col;
+    @apply flex h-[65vh] flex-1 flex-col md:h-[400px];
   }
 
   .editor {
-    @apply flex-1 overflow-y-auto w-full h-full bg-white text-black ;
+    @apply h-full w-full flex-1 overflow-y-auto bg-white text-black;
   }
 }

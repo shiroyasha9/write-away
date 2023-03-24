@@ -3,13 +3,13 @@ import { prisma } from '@/server/db';
 import { postRequest } from '@/server/requests';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import {isEditorEmpty} from "@/utils";
+import { isEditorEmpty } from '@/utils';
 
 // react-quill
 import 'react-quill/dist/quill.snow.css';
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
 
-const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function EditNote({ note }) {
   const [title, setTitle] = useState('');
@@ -36,15 +36,13 @@ export default function EditNote({ note }) {
     });
 
     if (data.status === 200) {
-      setIsLoading(false)
+      setIsLoading(false);
       await router.push('/');
     }
   };
 
   const isDisabled =
-    title.trim() === ''
-    || isEditorEmpty(description)
-    || isLoading;
+    title.trim() === '' || isEditorEmpty(description) || isLoading;
 
   if (!note) return <div>Not found</div>;
 
@@ -70,19 +68,20 @@ export default function EditNote({ note }) {
         </div>
         <div>
           <label htmlFor="description">Description</label>
-          <div className='editor-container'>
+          <div className="editor-container">
             <ReactQuill
               theme="snow"
               value={description}
               onChange={(html) => {
-                setDescription(html)
-              }
-              }
-              className='editor'
+                setDescription(html);
+              }}
+              className="editor"
             />
           </div>
         </div>
-        <Button type="submit" disabled={isDisabled}>{!isLoading ? 'Update Note' : 'Updating...'}</Button>
+        <Button type="submit" disabled={isDisabled}>
+          {!isLoading ? 'Update Note' : 'Updating...'}
+        </Button>
       </form>
     </div>
   );

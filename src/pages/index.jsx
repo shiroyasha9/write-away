@@ -9,7 +9,7 @@ export default function Home({ notes }) {
     <div className="flex w-full flex-1 flex-col items-center gap-y-4">
       <Header />
       {notes.length === 0 && <div>No notes yet. Add one?`</div>}
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-4 mt-4'>
+      <div className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {notes.map((note) => (
           <NoteCard key={note.id} note={note} />
         ))}

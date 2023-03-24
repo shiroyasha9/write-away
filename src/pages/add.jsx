@@ -1,13 +1,13 @@
 import Button from '@/components/Button';
-import {postRequest} from '@/server/requests';
-import {useRouter} from 'next/router';
-import {useState} from 'react';
-import dynamic from "next/dynamic";
-import {isEditorEmpty} from "@/utils";
+import { postRequest } from '@/server/requests';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { isEditorEmpty } from '@/utils';
 
 import 'react-quill/dist/quill.snow.css';
-import {RECIPE} from "@/constants/recipe";
-const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
+import { RECIPE } from '@/constants/recipe';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function Add() {
   const [title, setTitle] = useState('');
@@ -26,15 +26,13 @@ export default function Add() {
     });
 
     if (data.status === 200) {
-      setIsLoading(false)
+      setIsLoading(false);
       await router.push('/');
     }
   };
 
   const isDisabled =
-    title.trim() === ''
-    || isEditorEmpty(description)
-    || isLoading;
+    title.trim() === '' || isEditorEmpty(description) || isLoading;
 
   return (
     <div>
@@ -55,20 +53,21 @@ export default function Add() {
         </div>
         <div>
           <label htmlFor="description">Description</label>
-          <div className='editor-container'>
+          <div className="editor-container">
             <ReactQuill
               theme="snow"
               value={description}
               onChange={(html) => {
-                setDescription(html)
-              }
-              }
-              className='editor'
+                setDescription(html);
+              }}
+              className="editor"
               placeholder={RECIPE}
             />
           </div>
         </div>
-        <Button type="submit" disabled={isDisabled}>{!isLoading ? 'Add Note' : 'Adding...'}</Button>
+        <Button type="submit" disabled={isDisabled}>
+          {!isLoading ? 'Add Note' : 'Adding...'}
+        </Button>
       </form>
     </div>
   );
