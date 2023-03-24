@@ -7,3 +7,9 @@
     @apply min-h-screen bg-purple-900 bg-gradient-to-b from-purple-700 to-purple-1000 p-6 text-white md:p-8;
   }
 }
+
+@layer components {
+  .input {
+    @apply block w-full rounded-md border border-slate-300 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-lemon focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lemon sm:text-sm sm:leading-6;
+  }
+}
