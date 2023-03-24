@@ -12,7 +12,21 @@ const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
 const NotePage = ({ note }) => {
   const router = useRouter();
 
+  const editNoteHandler = async (e) => {
+    if(note.id === 'clfmwu4yx0006uo031axq51tq' || note.id === 'clfmwbf7v0004uo031axhnzbk') {
+      alert('Why???\nPerfect recipe ko touch nahi karte\nTry toh karke dekh 🙃');
+      return
+    }
+
+    router.push(`/notes/${note.id}/edit`)
+  }
+
   const deleteNoteHandler = async () => {
+    if(note.id === 'clfmwu4yx0006uo031axq51tq' || note.id === 'clfmwbf7v0004uo031axhnzbk') {
+      alert('Why???\nAchi toh hai Recipe\nTry toh karke dekh 🙃');
+      return
+    }
+
     const data = await postRequest('/api/deleteNote', {
       id: note.id,
     });
@@ -31,7 +45,7 @@ const NotePage = ({ note }) => {
           <Button onClick={() => router.back()}>Go back</Button>
         </div>
         <div className="flex gap-x-4">
-          <Button onClick={() => router.push(`/notes/${note.id}/edit`)}>
+          <Button onClick={editNoteHandler}>
             Edit
           </Button>
           <Button onClick={deleteNoteHandler}>Delete</Button>
