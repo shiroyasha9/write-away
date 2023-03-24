@@ -1,5 +1,10 @@
 import '@/styles/globals.css';
+import { Rubik } from '@next/font/google';
 import Head from 'next/head';
+
+export const rubik = Rubik({
+  subsets: ['latin'],
+});
 
 export default function App({ Component, pageProps }) {
   return (
@@ -11,6 +16,11 @@ export default function App({ Component, pageProps }) {
         />
         <title>Write Away</title>
       </Head>
+      <style jsx global>{`
+        html {
+          font-family: ${rubik.style.fontFamily};
+        }
+      `}</style>
       <Component {...pageProps} />
     </>
   );
