@@ -13,7 +13,7 @@ const NotePage = ({ note }) => {
   const router = useRouter();
 
   const editNoteHandler = async (e) => {
-    if(note.id === 'clfmwu4yx0006uo031axq51tq' || note.id === 'clfmwbf7v0004uo031axhnzbk') {
+    if(note.id === 'clfmwu4yx0006uo031axq51tq' || note.id === 'clfmwbf7v0004uo031axhnzbk' || note.id === 'clfmx8xji0008uo03iukrk73d') {
       alert('Why???\nPerfect recipe ko touch nahi karte\nTry toh karke dekh 🙃');
       return
     }
@@ -22,7 +22,7 @@ const NotePage = ({ note }) => {
   }
 
   const deleteNoteHandler = async () => {
-    if(note.id === 'clfmwu4yx0006uo031axq51tq' || note.id === 'clfmwbf7v0004uo031axhnzbk') {
+    if(note.id === 'clfmwu4yx0006uo031axq51tq' || note.id === 'clfmwbf7v0004uo031axhnzbk' || note.id === 'clfmx8xji0008uo03iukrk73d') {
       alert('Why???\nAchi toh hai Recipe\nTry toh karke dekh 🙃');
       return
     }
