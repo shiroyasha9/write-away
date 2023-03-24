@@ -1,6 +1,6 @@
 import Header from '@/components/Header';
 import NoteCard from '@/components/NoteCard';
-import { prisma } from '@/db';
+import { prisma } from '@/server/db';
 
 export default function Home({ notes }) {
   if (!notes) return <div>Loading...</div>;
