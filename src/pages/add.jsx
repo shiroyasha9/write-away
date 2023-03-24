@@ -1,13 +1,21 @@
 import Button from '@/components/Button';
-import { postRequest } from '@/server/requests';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
+import {postRequest} from '@/server/requests';
+import {useRouter} from 'next/router';
+import {useState} from 'react';
+import 'react-quill/dist/quill.snow.css';
+import dynamic from "next/dynamic";
 
-export default function add() {
+const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
+
+export default function Add() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
+
   const addNewNoteHandler = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const data = await postRequest('/api/addNote', {
@@ -16,9 +24,15 @@ export default function add() {
     });
 
     if (data.status === 200) {
+      setIsLoading(false)
       router.push('/');
     }
   };
+
+  const isDisabled =
+    title.trim() === ''
+    || description.replace(/<(.|\n)*?>/g, '').trim().length === 0
+    || isLoading;
 
   return (
     <div>
@@ -39,18 +53,18 @@ export default function add() {
         </div>
         <div>
           <label htmlFor="description">Description</label>
-          <textarea
-            name="description"
-            id="description"
-            rows={6}
+          <div className='editor-container'>
+          <ReactQuill
+            theme="snow"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="1. Boil water..."
-            className="input resize-none"
-            required
+            onChange={(html) => {
+              setDescription(html)}
+          }
+            className='editor'
           />
+          </div>
         </div>
-        <Button type="submit">Add Note</Button>
+        <Button type="submit" disabled={isDisabled}>{!isLoading ? 'Add Note' : 'Adding...'}</Button>
       </form>
     </div>
   );

@@ -12,4 +12,12 @@
   .input {
     @apply block w-full rounded-md border border-slate-300 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-lemon focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lemon sm:text-sm sm:leading-6;
   }
+
+  .editor-container {
+    @apply h-[300px] flex flex-1 flex-col;
+  }
+
+  .editor {
+    @apply flex-1 overflow-y-auto w-full h-full bg-white text-black ;
+  }
 }
