@@ -5,7 +5,6 @@ import { prisma } from '@/db';
 export default function Home({ notes }) {
   if (!notes) return <div>Loading...</div>;
 
-  console.log(notes);
   return (
     <div className="flex w-full flex-1 flex-col items-center gap-y-4">
       <Header />
