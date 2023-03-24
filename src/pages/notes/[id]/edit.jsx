@@ -1,4 +1,5 @@
 import Button from '@/components/Button';
+import { postRequest } from '@/server/requests';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -17,16 +18,10 @@ export default function EditNote({ note }) {
   const editNoteHandler = async (e) => {
     e.preventDefault();
 
-    const data = await fetch('/api/editNote', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: note.id,
-        title,
-        description,
-      }),
+    const data = await postRequest('/api/editNote', {
+      id: note.id,
+      title,
+      description,
     });
 
     if (data.status === 200) {

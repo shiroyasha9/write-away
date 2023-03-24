@@ -1,4 +1,5 @@
 import Button from '@/components/Button';
+import { postRequest } from '@/server/requests';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -8,17 +9,10 @@ export default function add() {
   const router = useRouter();
   const addNewNoteHandler = async (e) => {
     e.preventDefault();
-    const newNote = {
+
+    const data = await postRequest('/api/addNote', {
       title,
       description,
-    };
-
-    const data = await fetch('/api/addNote', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newNote),
     });
 
     if (data.status === 200) {

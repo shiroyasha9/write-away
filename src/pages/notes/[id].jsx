@@ -1,18 +1,13 @@
 import Button from '@/components/Button';
+import { postRequest } from '@/server/requests';
 import { useRouter } from 'next/router';
 
 const NotePage = ({ note }) => {
   const router = useRouter();
 
   const deleteNoteHandler = async () => {
-    const data = await fetch('/api/deleteNote', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: note.id,
-      }),
+    const data = await postRequest('/api/deleteNote', {
+      id: note.id,
     });
 
     if (data.status === 200) {
