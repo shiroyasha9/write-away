@@ -1,13 +1,23 @@
 import Button from '@/components/Button';
-import { postRequest } from '@/server/requests';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
+import {postRequest} from '@/server/requests';
+import {useRouter} from 'next/router';
+import {useState} from 'react';
+import dynamic from "next/dynamic";
+import {isEditorEmpty} from "@/utils";
 
-export default function add() {
+import 'react-quill/dist/quill.snow.css';
+import {RECIPE} from "@/constants/recipe";
+const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
+
+export default function Add() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
+
   const addNewNoteHandler = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const data = await postRequest('/api/addNote', {
@@ -16,9 +26,15 @@ export default function add() {
     });
 
     if (data.status === 200) {
-      router.push('/');
+      setIsLoading(false)
+      await router.push('/');
     }
   };
+
+  const isDisabled =
+    title.trim() === ''
+    || isEditorEmpty(description)
+    || isLoading;
 
   return (
     <div>
@@ -39,18 +55,20 @@ export default function add() {
         </div>
         <div>
           <label htmlFor="description">Description</label>
-          <textarea
-            name="description"
-            id="description"
-            rows={6}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="1. Boil water..."
-            className="input resize-none"
-            required
-          />
+          <div className='editor-container'>
+            <ReactQuill
+              theme="snow"
+              value={description}
+              onChange={(html) => {
+                setDescription(html)
+              }
+              }
+              className='editor'
+              placeholder={RECIPE}
+            />
+          </div>
         </div>
-        <Button type="submit">Add Note</Button>
+        <Button type="submit" disabled={isDisabled}>{!isLoading ? 'Add Note' : 'Adding...'}</Button>
       </form>
     </div>
   );

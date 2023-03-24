@@ -1,12 +1,32 @@
 import Button from '@/components/Button';
-import { prisma } from '@/server/db';
-import { postRequest } from '@/server/requests';
-import { useRouter } from 'next/router';
+import {prisma} from '@/server/db';
+import {postRequest} from '@/server/requests';
+import {useRouter} from 'next/router';
+
+// react-quill
+import dynamic from "next/dynamic";
+import 'react-quill/dist/quill.bubble.css';
+
+const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
 
 const NotePage = ({ note }) => {
   const router = useRouter();
 
+  const editNoteHandler = async (e) => {
+    if(note.id === 'clfmwu4yx0006uo031axq51tq' || note.id === 'clfmwbf7v0004uo031axhnzbk' || note.id === 'clfmx8xji0008uo03iukrk73d') {
+      alert('Why???\nPerfect recipe ko touch nahi karte\nTry toh karke dekh 🙃');
+      return
+    }
+
+    router.push(`/notes/${note.id}/edit`)
+  }
+
   const deleteNoteHandler = async () => {
+    if(note.id === 'clfmwu4yx0006uo031axq51tq' || note.id === 'clfmwbf7v0004uo031axhnzbk' || note.id === 'clfmx8xji0008uo03iukrk73d') {
+      alert('Why???\nAchi toh hai Recipe\nTry toh karke dekh 🙃');
+      return
+    }
+
     const data = await postRequest('/api/deleteNote', {
       id: note.id,
     });
@@ -25,7 +45,7 @@ const NotePage = ({ note }) => {
           <Button onClick={() => router.back()}>Go back</Button>
         </div>
         <div className="flex gap-x-4">
-          <Button onClick={() => router.push(`/notes/${note.id}/edit`)}>
+          <Button onClick={editNoteHandler}>
             Edit
           </Button>
           <Button onClick={deleteNoteHandler}>Delete</Button>
@@ -33,7 +53,13 @@ const NotePage = ({ note }) => {
       </div>
       <div className="bg-lemon/75 px-12 py-4">
         <h2 className="mb-2 text-xl font-bold text-black">{note.title}</h2>
-        <p className="text-gray-700">{note.description}</p>
+        <div className='h-[1px] bg-black/50'/>
+        <ReactQuill
+          value={note.description}
+          readOnly={true}
+          theme={"bubble"}
+          className='!text-black mt-2'
+        />
       </div>
     </div>
   );
