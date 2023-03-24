@@ -20,11 +20,16 @@ const NotePage = ({ note }) => {
 
   return (
     <div className="flex flex-col gap-y-4">
-      <div className="flex gap-x-4 self-end">
-        <Button onClick={() => router.push(`/notes/${note.id}/edit`)}>
-          Edit
-        </Button>
-        <Button onClick={deleteNoteHandler}>Delete</Button>
+      <div className="flex justify-between">
+        <div>
+          <Button onClick={() => router.back()}>Go back</Button>
+        </div>
+        <div className="flex gap-x-4">
+          <Button onClick={() => router.push(`/notes/${note.id}/edit`)}>
+            Edit
+          </Button>
+          <Button onClick={deleteNoteHandler}>Delete</Button>
+        </div>
       </div>
       <div className="bg-lemon/75 px-12 py-4">
         <h2 className="mb-2 text-xl font-bold text-black">{note.title}</h2>
