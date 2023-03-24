@@ -2,8 +2,8 @@ import Button from '@/components/Button';
 import {postRequest} from '@/server/requests';
 import {useRouter} from 'next/router';
 import {useState} from 'react';
-import 'react-quill/dist/quill.snow.css';
 import dynamic from "next/dynamic";
+import {isEditorEmpty} from "@/utils";
 
 const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
 
@@ -25,13 +25,13 @@ export default function Add() {
 
     if (data.status === 200) {
       setIsLoading(false)
-      router.push('/');
+      await router.push('/');
     }
   };
 
   const isDisabled =
     title.trim() === ''
-    || description.replace(/<(.|\n)*?>/g, '').trim().length === 0
+    || isEditorEmpty(description)
     || isLoading;
 
   return (
@@ -54,14 +54,15 @@ export default function Add() {
         <div>
           <label htmlFor="description">Description</label>
           <div className='editor-container'>
-          <ReactQuill
-            theme="snow"
-            value={description}
-            onChange={(html) => {
-              setDescription(html)}
-          }
-            className='editor'
-          />
+            <ReactQuill
+              theme="snow"
+              value={description}
+              onChange={(html) => {
+                setDescription(html)
+              }
+              }
+              className='editor'
+            />
           </div>
         </div>
         <Button type="submit" disabled={isDisabled}>{!isLoading ? 'Add Note' : 'Adding...'}</Button>

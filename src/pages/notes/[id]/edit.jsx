@@ -3,10 +3,19 @@ import { prisma } from '@/server/db';
 import { postRequest } from '@/server/requests';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import {isEditorEmpty} from "@/utils";
+
+// react-quill
+import 'react-quill/dist/quill.snow.css';
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
 
 export default function EditNote({ note }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -17,6 +26,7 @@ export default function EditNote({ note }) {
   }, [note]);
 
   const editNoteHandler = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const data = await postRequest('/api/editNote', {
@@ -26,9 +36,15 @@ export default function EditNote({ note }) {
     });
 
     if (data.status === 200) {
-      router.push('/');
+      setIsLoading(false)
+      await router.push('/');
     }
   };
+
+  const isDisabled =
+    title.trim() === ''
+    || isEditorEmpty(description)
+    || isLoading;
 
   if (!note) return <div>Not found</div>;
 
@@ -54,18 +70,19 @@ export default function EditNote({ note }) {
         </div>
         <div>
           <label htmlFor="description">Description</label>
-          <textarea
-            name="description"
-            id="description"
-            rows={6}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="1. Boil water..."
-            className="input resize-none"
-            required
-          />
+          <div className='editor-container'>
+            <ReactQuill
+              theme="snow"
+              value={description}
+              onChange={(html) => {
+                setDescription(html)
+              }
+              }
+              className='editor'
+            />
+          </div>
         </div>
-        <Button type="submit">Update Note</Button>
+        <Button type="submit" disabled={isDisabled}>{!isLoading ? 'Update Note' : 'Updating...'}</Button>
       </form>
     </div>
   );

@@ -1,5 +1,7 @@
 import '@/styles/globals.css';
 import Head from 'next/head';
+import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.bubble.css';
 
 export default function App({ Component, pageProps }) {
   return (
