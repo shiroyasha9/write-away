@@ -34,7 +34,10 @@ export default function EditNote({ note }) {
 
   return (
     <div>
-      <h1 className="text-center text-xl font-semibold">Edit note</h1>
+      <div className="flex justify-between">
+        <h1 className="text-center text-xl font-semibold">Edit note</h1>
+        <Button onClick={() => router.back()}>Go back</Button>
+      </div>
       <form className="mt-6 flex flex-col gap-y-4" onSubmit={editNoteHandler}>
         <div>
           <label htmlFor="title">Title</label>
