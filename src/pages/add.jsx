@@ -5,6 +5,8 @@ import {useState} from 'react';
 import dynamic from "next/dynamic";
 import {isEditorEmpty} from "@/utils";
 
+import 'react-quill/dist/quill.snow.css';
+import {RECIPE} from "@/constants/recipe";
 const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
 
 export default function Add() {
@@ -62,6 +64,7 @@ export default function Add() {
               }
               }
               className='editor'
+              placeholder={RECIPE}
             />
           </div>
         </div>

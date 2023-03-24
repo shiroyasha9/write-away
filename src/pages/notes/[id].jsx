@@ -5,6 +5,7 @@ import {useRouter} from 'next/router';
 
 // react-quill
 import dynamic from "next/dynamic";
+import 'react-quill/dist/quill.bubble.css';
 
 const ReactQuill = dynamic(() => import('react-quill'), {ssr: false});
 
@@ -43,7 +44,7 @@ const NotePage = ({ note }) => {
           value={note.description}
           readOnly={true}
           theme={"bubble"}
-          className='text-black mt-2'
+          className='!text-black mt-2'
         />
       </div>
     </div>

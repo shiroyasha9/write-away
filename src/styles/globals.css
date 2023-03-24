@@ -14,7 +14,7 @@
   }
 
   .editor-container {
-    @apply h-[300px] flex flex-1 flex-col;
+    @apply h-[65vh] md:h-[400px] flex flex-1 flex-col;
   }
 
   .editor {
