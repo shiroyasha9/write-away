@@ -1,61 +1,23 @@
 import Header from '@/components/Header';
 import NoteCard from '@/components/NoteCard';
+import { prisma } from '@/db';
 
-const NOTES = [
-  {
-    id: 1,
-    title: 'Note 1',
-    description: 'This is a note',
-  },
-  {
-    id: 2,
-    title: 'Note 2',
-    description: 'This is a note',
-  },
-  {
-    id: 3,
-    title: 'Note 3',
-    description: 'This is a note',
-  },
-  {
-    id: 4,
-    title: 'Note 4',
-    description: 'This is a note',
-  },
-  {
-    id: 5,
-    title: 'Note 5',
-    description: 'This is a note',
-  },
-  {
-    id: 6,
-    title: 'Note 6',
-    description: 'This is a note',
-  },
-  {
-    id: 7,
-    title: 'Note 7',
-    description: 'This is a note',
-  },
-  {
-    id: 8,
-    title: 'Note 8',
-    description: 'This is a note',
-  },
-  {
-    id: 9,
-    title: 'Note 9',
-    description: 'This is a note',
-  },
-];
+export default function Home({ notes }) {
+  if (!notes) return <div>Loading...</div>;
 
-export default function Home() {
+  console.log(notes);
   return (
     <div className="flex w-full flex-1 flex-col items-center gap-y-4">
       <Header />
-      {NOTES.map((note) => (
+      {notes.length === 0 && <div>No notes yet. Add one?`</div>}
+      {notes.map((note) => (
         <NoteCard key={note.id} note={note} />
       ))}
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const notes = await prisma.note.findMany();
+  return { props: { notes } };
+};
