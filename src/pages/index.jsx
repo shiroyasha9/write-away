@@ -6,10 +6,10 @@ export default function Home({ notes }) {
   if (!notes) return <div>Loading...</div>;
 
   return (
-    <div className="flex w-full flex-1 flex-col items-center gap-y-4">
+    <div className="home">
       <Header />
       {notes.length === 0 && <div>No notes yet. Add one?`</div>}
-      <div className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="notes-container">
         {notes.map((note) => (
           <NoteCard key={note.id} note={note} />
         ))}
