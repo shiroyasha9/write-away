@@ -1,4 +1,5 @@
 import Button from '@/components/Button';
+import { prisma } from '@/server/db';
 import { postRequest } from '@/server/requests';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -69,7 +70,6 @@ export default function EditNote({ note }) {
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
-  console.log(id);
   const note = await prisma.note.findUnique({
     where: {
       id,
