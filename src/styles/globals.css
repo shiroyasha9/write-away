@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply min-h-screen bg-purple-900 bg-gradient-to-b from-purple-700 to-purple-1000 p-6 text-white md:p-8;
+  }
+}
