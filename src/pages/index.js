@@ -18,6 +18,6 @@ export default function Home({ notes }) {
 }
 
 export const getServerSideProps = async () => {
-  const notes = await prisma.note.findMany();
-  return { props: { notes } };
+  const notes = await prisma.note.findMany({});
+  return { props: { notes: JSON.parse(JSON.stringify(notes)) } };
 };
