@@ -1,0 +1,27 @@
+{
+  "name": "Write Away",
+  "short_name": "Write Away",
+  "description": "Save your thoughts and ideas in a simple and easy way.",
+  "icons": [
+    {
+      "src": "/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#faf33e",
+  "background_color": "#7e22ce",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
